@@ -1,3 +1,0 @@
-# Using React + Typescript + Tailwind (Vite scaffolding)
-# npm create vite@latest <frontend>
-# npm install tailwindcss @tailwindcss/vite
