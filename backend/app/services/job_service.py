@@ -82,3 +82,4 @@ def create_job_pipeline(db: Session, job_data: JobCreate, current_user: User) ->
         db.rollback()
         logger.critical(f"Pipeline failed: {e}")
         raise HTTPException(status_code=500, detail="Failed to index job vector.")
+    

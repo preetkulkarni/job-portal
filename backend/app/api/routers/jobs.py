@@ -11,13 +11,24 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 
 from app.api.dependencies import get_db
-from app.models.schema import Job, User, UserRole
+from app.models.schema import Job, User, UserRole, RecruiterProfile
 from app.schemas.job_dto import JobCreate, JobUpdate, JobResponse
 from app.services import job_service
 from app.api.dependencies import require_role
 
 router = APIRouter(prefix="/jobs", tags=["Jobs"])
 logger = logging.getLogger(__name__)
+
+def job_dict(j: Job):
+    return {
+        "job_id": str(j.id),
+        "title": j.title,
+        "description": j.description,
+        "requirements": j.requirements,
+        "recruiter_id": str(j.recruiter_id),
+        "is_active": j.is_active,
+        "created_at": str(j.created_at)
+    }
 
 @router.get("", response_model=list[JobResponse])
 def list_jobs(
@@ -101,10 +112,11 @@ def delete_job(
     db.commit()
     return None
 
-@router.get("/me/managed", response_model=list[JobResponse])
-def get_my_posted_jobs(
-    db: Session = Depends(get_db), 
-    current_user: User = Depends(require_role("recruiter"))
-):
-    """Returns all jobs posted by the currently authenticated recruiter."""
-    return job_service.get_recruiter_jobs(db, current_user.id)
+@router.get("/recruiter/all-jobs")
+def my_jobs(db: Session = Depends(get_db), current_user: User = Depends(require_role("recruiter", "admin"))):
+    recruiter_profile = db.query(RecruiterProfile).filter(RecruiterProfile.id == current_user.id).first()
+    if not recruiter_profile:
+        return []
+        
+    jobs = db.query(Job).filter(Job.recruiter_id == recruiter_profile.id).order_by(Job.created_at.desc()).all()
+    return [job_dict(j) for j in jobs]
