@@ -16,7 +16,6 @@ from app.api.routers import (
     auth_router,
     saved_jobs,
     applications,
-    search,
     dashboard,
     jobs
 )
@@ -58,7 +57,6 @@ app.include_router(auth_router.router)
 app.include_router(jobs.router)
 app.include_router(saved_jobs.router)
 app.include_router(applications.router)
-app.include_router(search.router)
 app.include_router(dashboard.router)
 
 
