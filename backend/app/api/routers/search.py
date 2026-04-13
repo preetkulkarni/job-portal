@@ -11,7 +11,7 @@ from app.api.dependencies import get_db
 from app.models.schema import User, Job
 from app.schemas.search_dto import SearchCandidatesRequest, SearchCandidatesResponse
 from app.services import search_service
-from app.core.auth import require_role
+from app.api.dependencies import require_role
 
 # Standardizing prefix (removing /api as handled in main.py)
 router = APIRouter(prefix="/search", tags=["Semantic Search"])

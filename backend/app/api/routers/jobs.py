@@ -14,7 +14,7 @@ from app.api.dependencies import get_db
 from app.models.schema import Job, User, UserRole
 from app.schemas.job_dto import JobCreate, JobUpdate, JobResponse
 from app.services import job_service
-from app.core.auth import require_role
+from app.api.dependencies import require_role
 
 router = APIRouter(prefix="/jobs", tags=["Jobs"])
 logger = logging.getLogger(__name__)

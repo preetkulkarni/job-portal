@@ -137,3 +137,4 @@ class FAISSService:
 
 # Singleton instance
 resume_index = FAISSService()
+job_index = FAISSService()

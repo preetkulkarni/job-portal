@@ -11,7 +11,7 @@ from app.schemas.job_dto import JobCreate
 from app.utils.llm_parser import extract_job_data
 from app.utils.embedding_pipeline import generate_embedding
 # Assuming you want a separate index for Jobs so Candidates can search them
-from app.services.vector_service import job_index 
+from app.services.vector_service import job_index
 
 logger = logging.getLogger(__name__)
 

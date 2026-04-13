@@ -14,7 +14,7 @@ from app.models.schema import User, Job, JobApplication
 from app.schemas.dashboard_dto import DashboardJobViewResponse
 from app.schemas.application_dto import ApplicationStatusUpdate, ApplicationResponse
 from app.services import dashboard_service
-from app.core.auth import require_role
+from app.api.dependencies import require_role
 
 # Removed /api from prefix as it's typically handled at the app level in main.py
 router = APIRouter(prefix="/dashboard", tags=["Recruiter Dashboard"])
