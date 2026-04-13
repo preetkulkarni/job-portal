@@ -9,6 +9,8 @@ from typing import Dict
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.core.database import engine
+from app.models.schema import Base
 
 from app.api.routers import (
     auth_router,
@@ -18,6 +20,8 @@ from app.api.routers import (
     dashboard,
     jobs
 )
+
+Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
