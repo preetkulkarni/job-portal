@@ -101,7 +101,7 @@ def create_application(db: Session, app_data: ApplicationCreate, file_bytes: byt
         db.flush()  # Generate UUID for vector mapping
 
         # Indexing in FAISS
-        resume_index.add_vector(item_uuid=str(new_app.id), vector=embedding)
+        resume_index.add_vector(item_uuid=new_app.id, vector=embedding)
         new_app.vector_id = str(new_app.id)
 
         db.commit()
